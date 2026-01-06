@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Link Converter</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #050505;
+  color: #fff;
+  font-family: 'Lexend', sans-serif;
+}
+
+.container {
+  max-width: 900px;
+  margin: 80px auto;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 44px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 16px;
+  color: #b5b5b5;
+  margin-bottom: 45px;
+}
+
+input {
+  width: 100%;
+  padding: 18px;
+  font-size: 16px;
+  border-radius: 14px;
+  border: 1px solid #1a1a1a;
+  background: #0d0d0d;
+  color: #fff;
+  outline: none;
+}
+
+input:focus {
+  border-color: #ffffff;
+}
+
+button {
+  margin-top: 18px;
+  width: 100%;
+  padding: 18px;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  background: white;
+  color: black;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: #eaeaea;
+}
+
+.links {
+  margin-top: 45px;
+}
+
+.link-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #0d0d0d;
+  padding: 18px 22px;
+  border-radius: 16px;
+  margin-bottom: 16px;
+  border: 1px solid #1a1a1a;
+  transition: 0.25s;
+}
+
+.link-box:hover {
+  border-color: white;
+  box-shadow: 0 0 25px rgba(255,255,255,0.08);
+}
+
+.agent {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+a {
+  color: #cfcfcf;
+  text-decoration: none;
+  max-width: 60%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.link-box:hover a {
+  color: white;
+}
+
+.copy {
+  cursor: pointer;
+  font-size: 14px;
+  color: #999;
+  margin-left: 15px;
+}
+
+.copy:hover {
+  color: white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>Link Converter</h1>
+  <div class="subtitle">
+    Konwertuj linki do agentów jednym kliknięciem
+  </div>
+
+  <input id="inputLink" placeholder="Wklej link produktu (Taobao / Weidian / CNFans itd.)">
+  <button onclick="convert()">Konwertuj</button>
+
+  <div class="links" id="results"></div>
+</div>
+
+<script>
+const agents = [
+  { name: "CNFans", link: "https://cnfans.com/register?ref=150969" },
+  { name: "Kakobuy", link: "https://ikako.vip/r/cookie100" },
+  { name: "USFans", link: "https://www.usfans.com/register?ref=8KXPBM" },
+  { name: "Litbuy", link: "https://litbuy.com/register?inviteCode=GWQAFABFI" },
+  { name: "Acbuy", link: "https://www.acbuy.com/login?loginStatus=register&code=U45G96" },
+  { name: "Mulebuy", link: "https://mulebuy.com/register?ref=200855897" },
+  { name: "Oopbuy", link: "https://oopbuy.com/register?inviteCode=YG9049LND" }
+];
+
+function convert() {
+  const results = document.getElementById("results");
+  results.innerHTML = "";
+
+  agents.forEach(a => {
+    const box = document.createElement("div");
+    box.className = "link-box";
+
+    const agent = document.createElement("div");
+    agent.className = "agent";
+    agent.textContent = a.name;
+
+    const link = document.createElement("a");
+    link.href = a.link;
+    link.target = "_blank";
+    link.textContent = a.link;
+
+    const copy = document.createElement("div");
+    copy.className = "copy";
+    copy.textContent = "Kopiuj";
+    copy.onclick = () => {
+      navigator.clipboard.writeText(a.link);
+      copy.textContent = "✔";
+      setTimeout(() => copy.textContent = "Kopiuj", 1200);
+    };
+
+    box.appendChild(agent);
+    box.appendChild(link);
+    box.appendChild(copy);
+    results.appendChild(box);
+  });
+}
+</script>
+
+</body>
+</html>
